@@ -1,0 +1,7 @@
+output_path: "/scratch/indikar_root/indikar1/shared_data/apollo/"
+inputs: "config/image_paths.txt"
+extension: ".ome.tiff"
+stardist_model: "2D_versatile_fluo"
+prob_thresh: 0.4
+nms_thresh: 0.2
+threads: 36
