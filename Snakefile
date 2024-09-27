@@ -44,6 +44,7 @@ rule all:
         expand(OUTPUT + "images/{sid}.ome.tiff", sid=samples),
         expand(OUTPUT + "channel_intensities/{sid}.mean_intensity.csv", sid=samples),
         expand(OUTPUT + "pixel_counts/{sid}.csv", sid=samples),
+        expand(OUTPUT + "gif/{sid}.gif", sid=samples),
         
    
 rule get_images:
@@ -118,3 +119,17 @@ rule count_pixels:
         sid='|'.join([re.escape(x) for x in set(samples)]),
     shell:
         """python scripts/count_pixels.py {input} {output}"""
+        
+        
+rule make_movie:
+    input:
+        OUTPUT + "labels/{sid}.tiff",
+    output:
+        OUTPUT + "gif/{sid}.gif"
+    conda:
+        "imaging"
+    wildcard_constraints:
+        sid='|'.join([re.escape(x) for x in set(samples)]),
+    shell:
+        """python scripts/make_movie.py {input} {output}"""
+    
